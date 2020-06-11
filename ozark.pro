@@ -21,4 +21,4 @@ DEFINES += QT_DEPRECATED_WARNINGS
 HEADERS += virtualpanel.h
 SOURCES += main.cpp virtualpanel.cpp
 
-QT += gui widgets
+QT += gui widgets core
