@@ -9,7 +9,7 @@
 #include <QPixmap>
 #include <QString>
 #include <QListWidget>
-#include <QSignalMapper>
+#include <QTextEdit>
 
 class PSAVirtualPanel : public QWidget {
 
@@ -87,7 +87,8 @@ class PSAVirtualPanel : public QWidget {
 	 INFO,
 	 NEXT,
 	 PREV,
-	 QUIT
+	 QUIT,
+	 PRINT
       };
  
       /* Arrow Key Values */
@@ -189,7 +190,16 @@ class PSAVirtualPanel : public QWidget {
       QStringList maintList = {"Pringhead Change", "Printer Cleaning", "Media Loading", "Ribbon Loading", "Label Jams", "Manuals"};
       QStringList registerProductList = {"Online Registration"};
       QStringList contactList = {"Contact Us", "Request Service Call"};
-      
+
+      QString configPrint = "CURRENT CONFIGURATION\n\n001  10:49 12-Jun-2020\n002\n003  DC/PPC          V2.31F  04-Jun-20 #P301021\n004  BOOT MARS          V1.04A  16-Apr-20 #P300970\n005 SERIAL NUMBER          4T81510001\n006  BUILD CONTENT          IPDS/TN/Postscript/PDF/PJL Ver 1A\n007  ACTIVE PROGRAM          IPDS/PJL Ver 1A/IGP/LP+\n008  FEATURES ENABLED          365093 (ASCII)\n009\n010\n011\n012  FLASH\n013  DRAM\n014  HEAD RESOLUTION\n015  PRINTER ON TIME\n016  TOTAL LABEL COUNT\n";
+     
+      /* Quick and dirty */
+      boolean isAddOfflineScreen = false;
+      boolean isAddSettingsPageOne = false;
+      boolean isAddSettingsPageTwo = false;
+      boolean isAddWizardPage = false;
+      boolean isAddInfoPage = false;
+      boolean isAddListPage = false; 
    private:
       /* Front Panel Buttons */
       QPushButton *pauseButton;
@@ -232,6 +242,8 @@ class PSAVirtualPanel : public QWidget {
       QListWidget *subMenuList;
       QListWidget *fullMenuList;
 
+      QTextEdit *cfg;
+
       /* Functions for creating menus */
       void buildSettingsMenu();
       void buildWizardMenu();
@@ -257,6 +269,7 @@ class PSAVirtualPanel : public QWidget {
       QPushButton *createButtonImage(QString dir, int x, int y, int width, int height);
       void changeButtonPix(QPushButton *btn, QString dir, int width, int height);
       QLabel *createLabel(QString path, QString text);
+      void buildConfigPrintout();
 
    private slots:
       /* Event handlers for the buttons */

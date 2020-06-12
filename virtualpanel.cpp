@@ -15,6 +15,7 @@ PSAVirtualPanel::PSAVirtualPanel(QWidget *parent)
    leftKeyButton = createButtonImage("icons/PanelLeft.png", 130, 380, 30, 100);
    rightKeyButton = createButtonImage("icons/PanelRight.png", 260, 380, 30, 100);
    enterKeyButton = createButtonImage("icons/PanelEnter.png", 175, 400, 70, 60);
+
    /* Left soft key button */
    leftSoftKeyButton = new QPushButton(" ", this);
    leftSoftKeyButton->setGeometry(50, 385, 40, 90);
@@ -61,6 +62,9 @@ PSAVirtualPanel::PSAVirtualPanel(QWidget *parent)
    bottomLabel->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
    bottomLabel->setStyleSheet("background-color: grey");
   
+   /* Config printout */ 
+   cfg = new QTextEdit();
+
    buildOfflineMenu();
 
    topMenuList = new QListWidget();
@@ -341,6 +345,7 @@ void PSAVirtualPanel::rightSoftKey() {
 
    switch (rightSoftVal) {
       case INFO:
+	 buildConfigPrintout();
          break;
       case NEXT:
 	 buildSettingsMenu2();
@@ -1000,4 +1005,28 @@ void PSAVirtualPanel::leftHold() {
 
 void PSAVirtualPanel::leftRelease() {
    changeButtonPix(leftKeyButton, "icons/PanelLeft.png", 30, 100);
+}
+
+void PSAVirtualPanel::buildConfigPrintout() {
+   cfg->setText(configPrint);
+   cfg->setReadOnly(true);
+   cfg->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
+   cfg->setLineWrapMode(QTextEdit::NoWrap);
+
+   topLabel->setText("Info");
+   topLabel->setAlignment(Qt::AlignLeft);
+
+   bottomLabel->setText("Home                                                         Print");
+   bottomLabel->setAlignment(Qt::AlignLeft);
+
+   leftSoftVal = HOME;
+   rightSoftVal = PRINT;
+
+   wizardIcon->hide();
+   settingsIcon->hide();
+   calibrateIcon->hide();
+  
+   grid->setVerticalSpacing(0); 
+   grid->addWidget(cfg, 1, 0);
+   cfg->show();   
 }
